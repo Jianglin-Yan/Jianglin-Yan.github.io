@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人主页</title>
+    <style>
+        /* 基础样式：让页面看起来干净现代 */
+        body { font-family: -apple-system, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #f4f7f6; }
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        .tagline { color: #7f8c8d; font-size: 1.1em; }
+        
+        /* 成就卡片样式 */
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { margin-top: 0; color: #3498db; }
+        .date { font-size: 0.85em; color: #95a5a6; float: right; }
+        
+        /* 底部链接 */
+        footer { text-align: center; margin-top: 50px; border-top: 1px solid #ddd; padding-top: 20px; }
+        .btn { background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>张三 (Your Name)</h1>
+        <p class="tagline">终身学习者 | 某某项目负责人 | 摄影爱好者</p>
+    </header>
+
+    <section>
+        <h2>核心成就 ✨</h2>
+        
+        <div class="card">
+            <span class="date">2023 - 至今</span>
+            <h3>某某知名项目负责人</h3>
+            <p>成功带领团队完成了 XYZ 系统的开发，提升了 30% 的运行效率，获得了年度优秀员工称号。</p>
+        </div>
+
+        <div class="card">
+            <span class="date">2022.10</span>
+            <h3>获得某某行业技能大赛一等奖</h3>
+            <p>在 500 名参赛者中脱颖而出，展示了在数据分析与可视化方面的专业能力。</p>
+        </div>
+
+        <div class="card">
+            <span class="date">2021.06</span>
+            <h3>独立开发并上线个人第一个开源插件</h3>
+            <p>该插件在 GitHub 上获得了 100+ Stars，帮助用户解决了自动化办公的痛点。</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>想了解更多？</p>
+        <a href="mailto:yourmail@example.com" class="btn">联系我</a>
+    </footer>
+
+</body>
+</html>
