@@ -204,9 +204,9 @@
         /* 章节通用样式 */
         section {
             margin: 100px 0;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
+            opacity: 1;
+            transform: none;
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         section.visible {
@@ -379,55 +379,134 @@
             color: var(--primary);
         }
 
-        /* 项目卡片 */
+        /* 项目作品集 */
+        .projects-intro {
+            max-width: 680px;
+            margin: -35px auto 45px;
+            color: #9b9bab;
+            text-align: center;
+            font-size: 1.05em;
+        }
+
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr;
+            gap: 24px;
         }
 
         .project-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(123, 44, 191, 0.3);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s;
+            --project-color: var(--primary);
+            display: grid;
+            grid-template-columns: minmax(270px, 0.8fr) minmax(0, 1.7fr);
+            background: linear-gradient(115deg, rgba(20, 20, 35, 0.96), rgba(13, 13, 24, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 22px;
             position: relative;
             overflow: hidden;
+            isolation: isolate;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .project-card:nth-child(even) {
+            --project-color: var(--accent);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 3px;
+            background: var(--project-color);
+            box-shadow: 0 0 18px var(--project-color);
         }
 
         .project-card::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(123, 44, 191, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .project-card:hover::after {
-            opacity: 1;
+            width: 260px;
+            height: 260px;
+            right: -150px;
+            top: -170px;
+            border-radius: 50%;
+            background: var(--project-color);
+            filter: blur(90px);
+            opacity: 0.08;
+            z-index: -1;
+            transition: opacity 0.35s ease;
         }
 
         .project-card:hover {
-            transform: scale(1.02);
-            border-color: var(--secondary);
-            box-shadow: 0 20px 50px rgba(123, 44, 191, 0.3);
+            transform: translateY(-6px);
+            border-color: color-mix(in srgb, var(--project-color) 55%, transparent);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+        }
+
+        .project-card:hover::after {
+            opacity: 0.14;
+        }
+
+        .project-overview,
+        .project-details {
+            padding: 34px;
+        }
+
+        .project-overview {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .project-index {
+            color: var(--project-color);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.8em;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
         }
 
         .project-card h3 {
-            color: var(--secondary);
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 1.45em;
+            line-height: 1.35;
         }
 
         .project-card .location {
-            color: #888;
-            font-size: 0.9em;
-            margin-bottom: 15px;
+            color: #858596;
+            font-size: 0.86em;
+            margin-bottom: 20px;
+        }
+
+        .project-summary {
+            color: #b8b8c6;
+            margin-bottom: 24px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .project-tag {
+            padding: 5px 10px;
+            color: var(--project-color);
+            background: color-mix(in srgb, var(--project-color) 9%, transparent);
+            border: 1px solid color-mix(in srgb, var(--project-color) 28%, transparent);
+            border-radius: 6px;
+            font-size: 0.78em;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .project-details h4 {
+            color: #f1f1f5;
+            margin-bottom: 14px;
+            font-size: 0.88em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
 
         .project-card ul {
@@ -435,17 +514,20 @@
         }
 
         .project-card li {
-            padding: 8px 0;
-            color: #ccc;
-            padding-left: 20px;
+            padding: 9px 0 9px 22px;
+            color: #c7c7d2;
             position: relative;
         }
 
         .project-card li::before {
-            content: '🔹';
+            content: '';
             position: absolute;
-            left: 0;
-            font-size: 0.8em;
+            left: 1px;
+            top: 19px;
+            width: 9px;
+            height: 2px;
+            background: var(--project-color);
+            box-shadow: 0 0 8px var(--project-color);
         }
 
         /* 教育背景 */
@@ -547,48 +629,29 @@
             .timeline { padding-left: 30px; }
             .timeline::before { left: 10px; }
             .timeline-item::before { left: -28px; }
+            .project-card { grid-template-columns: 1fr; }
+            .project-overview { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+            .project-overview, .project-details { padding: 26px; }
+            .project-card h3 { font-size: 1.3em; }
         }
 
-        /* 加载动画 */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s;
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+
+            section {
+                opacity: 1;
+                transform: none;
+            }
+
         }
 
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-ring {
-            width: 80px;
-            height: 80px;
-            border: 4px solid transparent;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
-    <!-- 加载动画 -->
-    <div class="loader" id="loader">
-        <div class="loader-ring"></div>
-    </div>
-
     <!-- 粒子背景 -->
     <div id="particles"></div>
 
@@ -678,9 +741,11 @@
                     <p class="company">魔法原子机器人 | 苏州</p>
                     <p class="time">📅 2026.01 - 至今</p>
                     <ul>
-                        <li>运控算法开发：面向具体机器人商业应用场景，设计强时效性求逆解方案，推进机械臂操作场景落地</li>
-                        <li>强化学习技术预研：围绕机器人操作任务，进行强化学习控制方案的探索与验证</li>
-                        <li>技术栈整理：对预研过程中的实验结果与问题进行总结，形成技术方案与实现思路</li>
+                        <li>负责双臂人形机器人运动控制与系统落地，围绕 VR 遥操作、具身智能抓取和无碰撞轨迹规划构建算法链路</li>
+                        <li>开发 Pico VR 双臂遥操作系统，完成 6-DoF 数据接入、坐标映射、双侧 7-DoF IK、安全滤波及 MuJoCo / LCM 仿真真机闭环</li>
+                        <li>搭建多模态双臂药品抓取系统，融合 OCR、SAM3、RGB-D 点云、GraspGen 与 WBC / IK，贯通感知—规划—执行流程</li>
+                        <li>提出分段式梯度优化与动态约束的无碰撞规划方法，并形成发明专利技术方案</li>
+                        <li>基于 IsaacLab 与 Residual PPO 研发双臂示教轨迹避障策略，通过并行强化学习在保持原始动作结构的同时修正自碰撞片段</li>
                     </ul>
                 </div>
                 <div class="timeline-item">
@@ -720,38 +785,151 @@
         <!-- 项目经历 -->
         <section id="projects">
             <h2 class="section-title">🚀 项目经历</h2>
+            <p class="projects-intro">从机器人感知、运动规划到实时控制与系统部署，构建可验证、可落地的完整技术链路。</p>
             <div class="projects-grid">
                 <div class="project-card">
-                    <h3>CubeSat 双机械臂协作运动学与轨迹规划</h3>
-                    <p class="location">📍 格拉斯哥 | 英国 | 2025.06-2025.09</p>
-                    <ul>
-                        <li>设计适用于太空环境的双 4DOF 机械臂构型，基于 GUI 和 Simulink 完成建模仿真</li>
-                        <li>创新性采用参考点预生成与空间映射法求解逆运动学，求解成功率 100%</li>
-                        <li>通过 C-Space 高维映射结合 RRT 算法实现无碰撞路径规划</li>
-                        <li>利用 GPU 并行计算将碰撞检测时间缩短至 10ms 以内</li>
-                        <li>实现毫米级轨迹跟踪精度</li>
-                    </ul>
+                    <div class="project-overview">
+                        <p class="project-index">01 / Teleoperation</p>
+                        <h3>基于 Pico VR 的双臂人形机器人遥操作系统</h3>
+                        <p class="location">苏州 · 中国　|　2026.01 — 至今</p>
+                        <p class="project-summary">面向 MagicBot Z1 构建从 VR 输入、运动解算到仿真与真机执行的 200Hz 双臂遥操作闭环。</p>
+                        <div class="project-tags">
+                            <span class="project-tag">C++17</span>
+                            <span class="project-tag">ROS2</span>
+                            <span class="project-tag">Pinocchio</span>
+                            <span class="project-tag">MuJoCo</span>
+                            <span class="project-tag">LCM</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li>通过有线 SDK / 无线 gRPC 接入 Pico 头显及双手柄 6-DoF 位姿与按键数据，统一转换至右手系 Z-up 坐标</li>
+                            <li>设计绝对式与增量式映射，完成 HMD—手柄—机械臂基座—TCP 坐标变换，并基于 Pinocchio 数值 IK 同步控制双侧 7-DoF 机械臂</li>
+                            <li>集成启动插值、OneEuro / EMA 平滑、低通滤波、关节速率限幅及复位状态机，降低接管跳变与手柄抖动</li>
+                            <li>打通 MuJoCo 仿真闭环与 ROS2 ↔ LCM 真机桥接，实现双臂、灵巧手指令分流及状态回传，复用统一 Sim2Real 控制接口</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <h3>基于 CNN 架构的 Qbot 机器人视觉导航</h3>
-                    <p class="location">📍 格拉斯哥 | 英国 | 2025.02-2025.05</p>
-                    <ul>
-                        <li>设计双 VGG 模型架构，分类网络实现场景识别，回归网络实现轨迹偏差计算</li>
-                        <li>基于 OpenCV 开发图像数据采集与标注工具，生成大规模训练数据集</li>
-                        <li>通过 CUDA 加速完成模型训练，轨迹偏差预测精度达 99.9%</li>
-                        <li>基于 Qbot 平台部署模型，实现纯视觉输入的自主导航</li>
-                    </ul>
+                    <div class="project-overview">
+                        <p class="project-index">02 / Embodied AI</p>
+                        <h3>基于行为树与多模态视觉的双臂智能药品抓取系统</h3>
+                        <p class="location">苏州 · 中国　|　2026.01 — 至今</p>
+                        <p class="project-summary">融合语义识别、三维感知、生成式抓取与全身运动控制，构建双臂药品分拣闭环。</p>
+                        <div class="project-tags">
+                            <span class="project-tag">BehaviorTree.CPP</span>
+                            <span class="project-tag">RGB-D</span>
+                            <span class="project-tag">SAM3</span>
+                            <span class="project-tag">GraspGen</span>
+                            <span class="project-tag">WBC / IK</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li>基于 ROS2 与 BehaviorTree.CPP 编排 GUI 下单、药品识别、机械臂选择、视觉抓取与归置任务</li>
+                            <li>集成 OCR 与 SAM3 HTTP 推理服务，融合腕部相机 RGB-D 数据，将二维分割掩码反投影为目标与场景三维点云</li>
+                            <li>部署 GraspGen 生成 6D 抓取候选，结合支持平面、目标中心距离和场景点云完成碰撞过滤</li>
+                            <li>通过全身 WBC / IK、关节限位、运动能量与视觉避障联合筛选可执行姿态，形成感知—规划—执行闭环</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <h3>基于行为树与多模态视觉的双臂智能药品抓取系统</h3>
-                    <p class="location">📍 苏州 | 中国 | 2026.01-至今</p>
-                    <ul>
-                        <li>基于 ROS2 与 BehaviorTree.CPP 搭建任务编排框架，贯通 GUI 下单、药品识别、机械臂选择、视觉抓取与归置流程</li>
-                        <li>集成 OCR 与 SAM3 HTTP 推理服务，实现中英文药品识别、目标分割及跨节点异步调用</li>
-                        <li>融合腕部相机 RGB-D 数据与相机内外参，将二维分割掩码反投影为目标/场景三维点云</li>
-                        <li>部署 GraspGen 预训练模型生成 6D 抓取候选，并结合支持平面、目标中心距离与场景点云完成碰撞过滤</li>
-                        <li>通过全身 WBC/IK、关节限位、运动能量与视觉避障联合筛选可执行抓取姿态，构建感知—规划—执行闭环</li>
-                    </ul>
+                    <div class="project-overview">
+                        <p class="project-index">03 / Collision-free Planning</p>
+                        <h3>基于分段式梯度优化与动态约束的机器人无碰撞轨迹规划</h3>
+                        <p class="location">苏州 · 中国　|　2026.03 — 至今</p>
+                        <p class="project-summary">针对双臂人形机器人示教轨迹中的自碰撞与穿模问题，研发兼顾脱困、动作保真和动力学可执行性的离线规划系统。</p>
+                        <div class="project-tags">
+                            <span class="project-tag">CHOMP</span>
+                            <span class="project-tag">TOPPRA</span>
+                            <span class="project-tag">Pinocchio</span>
+                            <span class="project-tag">MuJoCo</span>
+                            <span class="project-tag">发明专利</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心创新与成果</h4>
+                        <ul>
+                            <li>将机器人双臂、灵巧手与躯干参数化为胶囊体，构建 508 组有效碰撞对，以解析线段距离替代离散 SDF，获得连续平滑的碰撞梯度</li>
+                            <li>提出 Warmup / Refine 两阶段协变梯度优化：先以大排斥半径和弱参考引力完成深碰撞脱困，再在安全约束下贴近原始示教轨迹</li>
+                            <li>设计逐帧静态—动态双重引力截断机制，阻断参考轨迹对安全路径的复撞牵拉，消除碰撞边界附近的极限环振荡</li>
+                            <li>在双 7-DoF 人形机器人复杂手势轨迹测试中，将最小表面距离从 -8.82cm 提升至 1.78cm、碰撞帧由 125 帧降至 0 帧；结合全帧安全校验与 TOPPRA 速度/加速度约束生成可执行轨迹</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-overview">
+                        <p class="project-index">04 / Reinforcement Learning</p>
+                        <h3>基于 Residual PPO 的双臂示教轨迹自碰撞规避</h3>
+                        <p class="location">苏州 · 中国　|　2026.02 — 2026.03</p>
+                        <p class="project-summary">利用强化学习对含碰撞的双臂示教轨迹进行残差修正，在保留原始动作结构的同时学习平滑、安全的绕行动作。</p>
+                        <div class="project-tags">
+                            <span class="project-tag">IsaacLab</span>
+                            <span class="project-tag">Residual PPO</span>
+                            <span class="project-tag">RSL-RL</span>
+                            <span class="project-tag">PyTorch</span>
+                            <span class="project-tag">GPU Parallel</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li>将 MAGICBOT 人形机器人资产与双臂控制任务接入 IsaacLab，搭建 200Hz 物理仿真、50Hz 策略控制及 2048 环境 GPU 并行训练框架</li>
+                            <li>采用“参考轨迹 + 策略残差”的 14 维动作空间，仅学习双侧 7-DoF 关节修正量；引入首尾残差渐变，保证优化轨迹与原动作起止姿态连续衔接</li>
+                            <li>构建 831 维策略观测，融合双臂关节状态、当前及未来 20 帧参考轨迹、执行相位与 508 组胶囊体表面距离，使策略具备提前感知碰撞并规划绕行的能力</li>
+                            <li>设计轨迹跟踪、首次/持续碰撞、近碰预警、动作变化率、关节速度及终点约束等奖励项，完成 RSL-RL PPO 训练、模型导出与含碰撞示教轨迹的避障复现</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-overview">
+                        <p class="project-index">05 / Motion Planning</p>
+                        <h3>CubeSat 双机械臂协作运动学与轨迹规划</h3>
+                        <p class="location">格拉斯哥 · 英国　|　2025.06 — 2025.09</p>
+                        <p class="project-summary">面向太空操作场景，完成双机械臂构型设计、逆运动学、避障规划与高精度轨迹跟踪。</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Kinematics</span>
+                            <span class="project-tag">RRT</span>
+                            <span class="project-tag">C-Space</span>
+                            <span class="project-tag">CUDA</span>
+                            <span class="project-tag">Simulink</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心成果</h4>
+                        <ul>
+                            <li>设计适用于太空环境的双 4-DoF 机械臂构型，基于 GUI 和 Simulink 完成建模仿真</li>
+                            <li>采用参考点预生成与空间映射法求解逆运动学，求解成功率达到 100%</li>
+                            <li>通过 C-Space 高维映射结合 RRT 实现无碰撞路径规划，并利用 GPU 并行计算将碰撞检测时间缩短至 10ms 以内</li>
+                            <li>完成规划、插值与闭环跟踪链路，实现毫米级轨迹跟踪精度</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-overview">
+                        <p class="project-index">06 / Visual Navigation</p>
+                        <h3>基于 CNN 架构的 Qbot 机器人视觉导航</h3>
+                        <p class="location">格拉斯哥 · 英国　|　2025.02 — 2025.05</p>
+                        <p class="project-summary">以纯视觉输入完成场景识别与轨迹偏差估计，并将训练模型部署至 Qbot 移动机器人。</p>
+                        <div class="project-tags">
+                            <span class="project-tag">PyTorch</span>
+                            <span class="project-tag">VGG</span>
+                            <span class="project-tag">OpenCV</span>
+                            <span class="project-tag">CUDA</span>
+                            <span class="project-tag">Qbot</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心成果</h4>
+                        <ul>
+                            <li>设计双 VGG 模型架构，以分类网络完成场景识别，以回归网络计算轨迹偏差</li>
+                            <li>基于 OpenCV 开发图像数据采集与标注工具，建立模型训练数据集</li>
+                            <li>通过 CUDA 加速完成模型训练，轨迹偏差预测精度达到 99.9%</li>
+                            <li>在 Qbot 平台完成模型部署，实现仅依赖视觉输入的自主导航</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -889,15 +1067,6 @@
             });
         }
 
-        // 加载动画
-        function hideLoader() {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    document.getElementById('loader').classList.add('hidden');
-                }, 1000);
-            });
-        }
-
         // 平滑滚动
         function smoothScroll() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -929,7 +1098,6 @@
             typeWriter();
             scrollAnimation();
             progressBar();
-            hideLoader();
             smoothScroll();
             skillTagEffect();
         });
